@@ -158,7 +158,7 @@ Make sure root has execute permissions on the script, read permissions on the co
 
     sudo touch /etc/no-ip/no-ip.conf
 
-3.) Setthe parameters with your favorite editor. I use nano.  See the Config File section above for details.
+3.) Set the parameters with your favorite editor. I use nano.  See the Config File section above for details.
 
     sudo nano /etc/no-ip/no-ip.conf
     
