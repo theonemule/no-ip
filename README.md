@@ -6,69 +6,83 @@ The script can be run as a single instance with command line parameters, as a da
 
 
 Usage:
+------
 
-no-ip.sh -u=username -p=password -h=host.sample.com -d=true -l=/path/to/logfile.log
+      no-ip.sh -u=username -p=password -h=host.sample.com -d=true -l=/path/to/logfile.log
 
 
 Parameters:
 
--u, --username 
-	Username to logon to no-ip.com.
+    -u, --username 
 
--p, --password
-	Password to logon to no-ip.com.
+Username to logon to no-ip.com.
 
--h, --hostname
-	The domain name to update.
+    -p, --password
 
--d, --detectip
-	Tells the script to detect your external IP address. This takes precedence over -i.
+Password to logon to no-ip.com.
 
--i, --ip
-	Maually sets the IP address to update. If neither -d or -i are specified, no-ip will use the IP address it detects.
+    -h, --hostname
 
--n, --interval
-	When running the script as a daemon/service (see Installation), this will update no-ip every n minutes.
+The domain name to update.
 
--l, --logfile
-	Sets the path to a log file. This file must be writable.
+    -d, --detectip
 
--c, --config
-	Sets the path to a config file. This file must be readable. Config file parameters take precedence over command line parameters.
+Tells the script to detect your external IP address. This takes precedence over -i.
+
+    -i, --ip
+
+Maually sets the IP address to update. If neither -d or -i are specified, no-ip will use the IP address it detects.
+
+    -n, --interval
+
+When running the script as a daemon/service (see Installation), this will update no-ip every n minutes.
+
+    -l, --logfile
+
+Sets the path to a log file. This file must be writable.
+
+    -c, --config
+
+Sets the path to a config file. This file must be readable. Config file parameters take precedence over command line parameters.
 
 
 
 Examples:
+---------
 
-no-ip.sh 
-	Runs the script with the settings in the config file in the default locaion /etc/no-ip/no-ip.conf
+    no-ip.sh 
 
-no-ip.sh -u=username -p=password -h=host.sample.com -d=true -l=/path/to/logfile.log
-	Does a one-time update, detecting the UP and logging the results
+Runs the script with the settings in the config file in the default locaion /etc/no-ip/no-ip.conf
 
-no-ip.sh -c=/home/username/no-ip.conf
-	Runs the script with the settings in the config file.
+    no-ip.sh -u=username -p=password -h=host.sample.com -d=true -l=/path/to/logfile.log
 
-no-ip.sh /dev/null 2>&1 &
-	Runs the script as a daemon with the settings in the config file in the default locaion /etc/no-ip/no-ip.conf.
+Does a one-time update, detecting the UP and logging the results
 
+    no-ip.sh -c=/home/username/no-ip.conf
 
+Run the script with the settings in the config file.
+
+    no-ip.sh /dev/null 2>&1 &
+
+Runs the script as a daemon with the settings in the config file in the default locaion /etc/no-ip/no-ip.conf.
 
 Config File:
+------------
 
 The config file uses a simple syntax to define parameters. Any command line parameter (except --config) can also be specified in the config file. The same rules apply for the config file parameters as caommand line parameters (ie. "detectip" overrides "ip" if both are specified).
 
 Example:
 
-user=username 
-password=password 
-hostname=hostname.example.com
-logfile=/var/log/no-ip.log
-interval=10
-detectip=true
+    user=username 
+    password=password 
+    hostname=hostname.example.com
+    logfile=/var/log/no-ip.log
+    interval=10
+    detectip=true
 
 
 Installation:
+-------------
 
 Method 1: crontabs
 
@@ -78,93 +92,87 @@ Here's how to run the script as root.
 
 1.) Create a folder in etc.
 
-	sudo mkdir /etc/no-ip
+      sudo mkdir /etc/no-ip
 
-2.) Create a config file.
+2.)  Create a config file.
 
-	sudo touch /etc/no-ip/no-ip.conf
+    sudo touch /etc/no-ip/no-ip.conf
 
-3.) Setthe parameters with your favorite editor. I use nano.  Config file section above.
+3.) Set the parameters with your favorite editor. I use nano.  See the Config File section above.
 
-	sudo nano /etc/no-ip/no-ip.conf
+    sudo nano /etc/no-ip/no-ip.conf
 
-	user=username 
-	password=password 
-	hostname=hostname.example.com
-	logfile=/var/log/no-ip.log
-	detectip=true
+    user=username 
+    password=password 
+    hostname=hostname.example.com
+    logfile=/var/log/no-ip.log
+    detectip=true
 
 4.) Copy no-ip.sh to /usr/sbin
 
-	sudo cp /path/to/script/no-ip.sh /usr/sbin/no-ip.sh
+    sudo cp /path/to/script/no-ip.sh /usr/sbin/no-ip.sh
 
 5.) Make the script executable
 
-	sudo chmod +x /usr/sbin/no-ip.sh
+    sudo chmod +x /usr/sbin/no-ip.sh
 
 6.) Logon as root
 
-	sudo -i
+    sudo -i
 
 7.) Edit root's crontab
 
-	crontab -e
+    crontab -e
 
 8.) Add the entry to the bottom. 10 tells crontab to run the script evert 10 minutes and save the crontab.
 
-	10 * * * * /usr/sbin/no-up.sh
-
-
-
+    10 * * * * /usr/sbin/no-up.sh
 
 
 Method 2: Linux Service (written for Debian-based distros. This will vary for other distros)
 
 Make sure root has execute permissions on the script, read permissions on the config file, and write permissions to the log file. 
 
-
 1.) Create a folder in /etc.
 
-	sudo mkdir /etc/no-ip
+    sudo mkdir /etc/no-ip
 
 2.) Create a config file.
 
-	sudo touch /etc/no-ip/no-ip.conf
+    sudo touch /etc/no-ip/no-ip.conf
 
 3.) Setthe parameters with your favorite editor. I use nano.  Config file section above.
 
-	sudo nano /etc/no-ip/no-ip.conf
-
-	user=username 
-	password=password 
-	hostname=hostname.example.com
-	logfile=/var/log/no-ip.log
-	interval=10
-	detectip=true
+    sudo nano /etc/no-ip/no-ip.conf
+    
+    user=username 
+    password=password 
+    hostname=hostname.example.com
+    logfile=/var/log/no-ip.log
+    interval=10
+    detectip=true
 
 4.) Copy no-ip.sh to /usr/sbin
 
-	sudo cp /path/to/script/no-ip.sh /usr/sbin/no-ip.sh
+    sudo cp /path/to/script/no-ip.sh /usr/sbin/no-ip.sh
 
 5.) Make the script executable
 
-	sudo chmod +x /usr/sbin/no-ip.sh
+    sudo chmod +x /usr/sbin/no-ip.sh
 
 6.) Copy no-ip-service to init.d
 
-	sudo cp /path/to/script/no-ip-service /etc/init.d/no-ip-service
+    sudo cp /path/to/script/no-ip-service /etc/init.d/no-ip-service
 
 7.) Make no-ip-service executable
 
-	sudo chmod +x /etc/init.d/no-ip-service
+    sudo chmod +x /etc/init.d/no-ip-service
 
 8.) Start the service
 
-	sudo service no-ip-service start
+    sudo service no-ip-service start
 
 9.) Add the service to start at boot.
 
-	update-rc.d no-ip-service defaults
-
-
+    update-rc.d no-ip-service defaults
 
