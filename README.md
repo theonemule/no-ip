@@ -92,7 +92,7 @@ Example:
 Installation:
 -------------
 
-**Before installing the script, download and extract the files to your local machine.**
+**Before installing the script, download and extract the files to your local machine. The instructions assume your are in the no-ip-master folder.**
 
       cd ~
       wget https://github.com/theonemule/no-ip/archive/master.zip
@@ -127,7 +127,7 @@ Here's how to run the script as root.
 
 4.) Copy no-ip.sh to /usr/sbin
 
-    sudo cp /path/to/script/no-ip.sh /usr/sbin/no-ip.sh
+    sudo cp no-ip.sh /usr/sbin/no-ip.sh
 
 5.) Make the script executable
 
