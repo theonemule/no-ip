@@ -4,6 +4,14 @@ Many routers have a built in NO-IP client, but my router doesn't support NO-IP, 
 
 The script can be run as a single instance with command line parameters, as a daemon, using crontabs (a utility for running programs on a schedule) or as a Linux service. 
 
+This script has one dependency, which is wget. This is usually installed by default on most Linux and BSD distros, but if not use your package manager to install it.
+
+      sudo apt-get install wget
+
+-or-
+
+      sudo yum install wget
+
 
 Usage:
 ------
@@ -84,6 +92,14 @@ Example:
 Installation:
 -------------
 
+**Before installing the script, download and extract the files to your local machine.**
+
+      cd ~
+      wget https://github.com/theonemule/no-ip/archive/master.zip
+      unzip master.zip
+      cd no-ip-master
+      
+
 Method 1: crontabs
 
 Crontabs allows you to specify a schedule to run the script and it will also run the script as the user the crontab is configured for. Make sure that the user has execute permissions on the script, read permissions on the config file, and write permissions to the log file. **Crontabs will run the script on a scheduled basis so there is no need to specify an interval.**
@@ -92,16 +108,17 @@ Here's how to run the script as root.
 
 1.) Create a folder in etc.
 
-      sudo mkdir /etc/no-ip
+    sudo mkdir /etc/no-ip
 
 2.)  Create a config file.
 
     sudo touch /etc/no-ip/no-ip.conf
 
 3.) Set the parameters with your favorite editor. I use nano.  See the Config File section above.
+ 
 
     sudo nano /etc/no-ip/no-ip.conf
-
+    
     user=username 
     password=password 
     hostname=hostname.example.com
@@ -175,4 +192,6 @@ Make sure root has execute permissions on the script, read permissions on the co
 9.) Add the service to start at boot.
 
     update-rc.d no-ip-service defaults
+
+
 
