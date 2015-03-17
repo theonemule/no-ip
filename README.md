@@ -171,7 +171,7 @@ Make sure root has execute permissions on the script, read permissions on the co
 
 4.) Copy no-ip.sh to /usr/sbin
 
-    sudo cp /path/to/script/no-ip.sh /usr/sbin/no-ip.sh
+    sudo cp no-ip.sh /usr/sbin/no-ip.sh
 
 5.) Make the script executable
 
@@ -179,7 +179,7 @@ Make sure root has execute permissions on the script, read permissions on the co
 
 6.) Copy no-ip-service to init.d
 
-    sudo cp /path/to/script/no-ip-service /etc/init.d/no-ip-service
+    sudo cp no-ip-service /etc/init.d/no-ip-service
 
 7.) Make no-ip-service executable
 
