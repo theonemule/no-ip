@@ -141,7 +141,7 @@ Here's how to run the script as root.
 
     crontab -e
 
-8.) Add the entry to the bottom. 10 tells crontab to run the script evert 10 minutes and save the crontab.
+8.) Add the entry to the bottom. */10 tells crontab to run the script every time the current time is divisble by 10, or every 10 minutes and save the crontab.
 
     */10 * * * * /usr/sbin/no-ip.sh
 
