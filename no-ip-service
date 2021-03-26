@@ -26,7 +26,7 @@ restart() {
     start
 }
 
-satus(){
+status(){
 	echo stat -c %y exe
 }
 
@@ -41,7 +41,7 @@ case "$1" in
         restart
     ;;
     *)
-        echo "Usage: $0 {start|stop|restart}"
+        echo "Usage: $0 {start|stop|restart|status}"
     ;; esac
 
 exit 0
