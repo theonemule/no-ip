@@ -8,6 +8,11 @@ IP=""
 RESULT=""
 INTERVAL=0
 CONFIG=""
+DEBUG="${DEBUG:-0}"
+
+if [[ "${DEBUG}" == "1" ]]; then
+	set -x
+fi
 
 if [ -f "/etc/no-ip/no-ip.conf" ]
 then
@@ -50,8 +55,8 @@ done
 if [ -n "$CONFIG" ] && [ -f "$CONFIG" ]
 then
 	while read line
-	do 
-		echo $line	
+	do
+		echo $line
 		case $line in
 			user=*)
 			USER="${line#*=}"
@@ -125,11 +130,10 @@ then
 fi
 
 
-USERAGENT="--user-agent=\"no-ip shell script/1.0 mail@mail.com\""
-BASE64AUTH=$(echo '"$USER:$PASSWORD"' | base64)
-AUTHHEADER="--header=\"Authorization: $BASE64AUTH\""
-NOIPURL="https://$USER:$PASSWORD@dynupdate.no-ip.com/nic/update"
-
+USERAGENT="--user-agent 'no-ip shell script/1.0 mail@mail.com'"
+BASE64AUTH=$(echo "$USER:$PASSWORD" | base64)
+AUTHHEADER="--header 'Authorization: Basic ${BASE64AUTH}'"
+NOIPURL="https://dynupdate.no-ip.com/nic/update"
 
 if [ -n "$IP" ] || [ -n "$HOSTNAME" ]
 then
@@ -153,8 +157,12 @@ fi
 
 while :
 do
+	CMD="curl --location ${USERAGENT} ${AUTHHEADER} --request GET '${NOIPURL}'"
+	if [[ "${DEBUG}" == "1" ]]; then
+		echo "${CMD}"
+	fi
 
-	RESULT=$(wget -qO- $AUTHHEADER $USERAGENT $NOIPURL)
+	RESULT=$(eval ${CMD})
 
 	if [ -z "$RESULT" ] && [ $? -ne 0 ]
 	then
@@ -185,10 +193,10 @@ do
 		  RESULT="Server issued an error response"
 		  ;;
 		esac
-	fi 
+	fi
 
 
-	if  [ -n "$LOGFILE" ]  
+	if  [ -n "$LOGFILE" ]
 	then
 		if [ ! -f "$LOGFILE" ]
 		then
@@ -202,7 +210,7 @@ do
 	then
 		break
 	else
-		sleep "${INTERVAL}m" 
+		sleep "${INTERVAL}m"
 	fi
 
 done
