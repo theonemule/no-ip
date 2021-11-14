@@ -5,6 +5,7 @@ HOSTNAME=""
 LOGFILE=""
 DETECTIP=""
 IP=""
+IP6=""
 RESULT=""
 INTERVAL=0
 CONFIG=""
@@ -39,6 +40,9 @@ do
 		;;
 		-i=*|--ip=*)
 		IP="${i#*=}"
+		;;
+		-i6=*|--ip6=*)
+		IP6="${i6#*=}"
 		;;
 		-n=*|--interval=*)
 		INTERVAL="${i#*=}"
@@ -75,6 +79,9 @@ then
 			;;
 			ip=*)
 			IP="${line#*=}"
+			;;
+			ip6=*)
+			IP6="${line#*=}"
 			;;
 			interval=*)
 			INTERVAL="${line#*=}"
@@ -114,10 +121,11 @@ fi
 if [ -n "$DETECTIP" ]
 then
 	IP=$(wget -qO- "http://myexternalip.com/raw")
+	IP6=$(curl -6 https://ipv6.icanhazip.com/)
 fi
 
 
-if [ -n "$DETECTIP" ] && [ -z $IP ]
+if [ -n "$DETECTIP" ] && [ -z $IP ] && [ -z $IP6 ]
 then
 	RESULT="Could not detect external IP."
 fi
@@ -154,6 +162,14 @@ then
 	NOIPURL="${NOIPURL}myip=$IP"
 fi
 
+if [ -n "$IP6" ]
+then
+	if [ -n "$HOSTNAME" ]
+	then
+		NOIPURL="$NOIPURL&"
+	fi
+	NOIPURL="${NOIPURL}myipv6=$IP6"
+fi
 
 while :
 do
