@@ -27,7 +27,7 @@ restart() {
 }
 
 status(){
-	echo stat -c %y exe
+	echo stat -c %y $exe
 }
 
 case "$1" in
@@ -39,6 +39,9 @@ case "$1" in
     ;;
     restart)
         restart
+    ;;
+    status)
+    	status
     ;;
     *)
         echo "Usage: $0 {start|stop|restart|status}"
