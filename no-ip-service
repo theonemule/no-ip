@@ -27,12 +27,15 @@ restart() {
 }
 
 status(){
-	echo stat -c %y exe
+	echo stat -c %y $exe
 }
 
 case "$1" in
     start)
         start
+    ;;
+    status)
+    	status
     ;;
     stop)
         stop
